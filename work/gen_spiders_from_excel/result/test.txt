@@ -1,0 +1,8 @@
+a_39jiankangwang_zixunpindao_jibingxinxi^39健康网^资讯频道_疾病信息^资讯频道_疾病信息^http://news.39.net/jbyw/
+a_39jiankangwang_zixunpindao_quanweifabu^39健康网^资讯频道_权威发布^资讯频道_权威发布^http://news.39.net/qwfb/
+a_39jiankangwang_zixunpindao_yiyuandongtai^39健康网^资讯频道_医院动态^资讯频道_医院动态^http://news.39.net/yltx/
+a_39jiankangwang_zixunpindao_jujiaoyigai^39健康网^资讯频道_聚焦医改^资讯频道_聚焦医改^http://news.39.net/jjyg/
+a_39jiankangwang_zixunpindao_shipinanquan^39健康网^资讯频道_食品安全^资讯频道_食品安全^http://news.39.net/ysbj/ys/
+a_39jiankangwang_zixunpindao_keyanfaxian^39健康网^资讯频道_科研发现^资讯频道_科研发现^http://news.39.net/kyfx/
+a_39jiankangwang_zixunpindao_shehuiwanxiang^39健康网^资讯频道_社会万象^资讯频道_社会万象^http://news.39.net/shwx/
+a_39jiankangwang_zixunpindao_jiankangxinzhi^39健康网^资讯频道_健康新知^资讯频道_健康新知^http://news.39.net/xinzhi/
