@@ -14,6 +14,10 @@ class A_39jiankangwang_zixunpindao_jiankangxinzhiSpider(CrawlSpider):
     rules = (
         Rule(LinkExtractor(restrict_xpaths="/html/body/div[@class='center_bottom']/ul[@class='center_left']/li/strong/a"), callback='parse_item'),
     )
+    
+    def __init__(self, test=False, *args, **kwargs):
+        super(A_39jiankangwang_zixunpindao_jiankangxinzhiSpider, self).__init__(*args, **kwargs)
+        self.test = test
 
     def parse_start_url(self,response):
         item =  {}
@@ -34,3 +38,9 @@ class A_39jiankangwang_zixunpindao_jiankangxinzhiSpider(CrawlSpider):
         item['topTitle'] = ''
         item['bottomTitle'] = ''
         return item
+
+if __name__ == '__main__':
+
+    from scrapy import cmdline
+    command = ['scrapy','crawl','a_39jiankangwang_zixunpindao_jiankangxinzhi','-a','test=True']
+    cmdline.execute(command)

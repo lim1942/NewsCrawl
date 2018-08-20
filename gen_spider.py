@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
-# @Last Modified by:   xb12369
-# @Last Modified time: 2018-08-14 09:46:36
+# @Last Modified by:   lim
+# @Last Modified time: 2018-08-20 11:57:45
 
 import os
 import re
 import xlrd
 from tools import get_pinyin ,excel_ensure
+
 
 
 PATH = 'NewsCrawl/spiders/'
@@ -19,21 +20,31 @@ TEMPLATE = """import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
+# 配置3个地方
 
 class {}Spider(CrawlSpider):
-    
+
+    # 允许爬取的域名，可不配置
+    # allowed_domains = [''''] 
     IR_SITENAME = '{}'
     CHANNAL_PATH  ='{}'
     DOCCHANNEL = '{}'
     name = '{}'
-    # allowed_domains = ['''']
     start_urls = ['{}']
+    
+    # 1 >> 请配置概览页url提取规则
     rules = (
         Rule(LinkExtractor(restrict_xpaths=""), callback='parse_item'),
     )
 
+    def __init__(self, test=False, *args, **kwargs):
+        super({}, self).__init__(*args, **kwargs)
+        self.test = test
+
     def parse_start_url(self,response):
         item =  {}
+
+        # 2 >> 请配置概览页url提取规则(基本与1相同)
         indexLen = len(response.xpath("").extract())
         item['indexLen'] = indexLen
         return item
@@ -42,7 +53,7 @@ class {}Spider(CrawlSpider):
         item =  {}
         item['url'] = response.request.url
 
-
+        # 3 >> 请配置细缆页字段提取规则
         item['title'] = response.xpath("").extract_first()
         item['content'] = response.xpath("").extract_first()
         item['source'] = response.xpath("").extract_first()
@@ -50,14 +61,22 @@ class {}Spider(CrawlSpider):
         item['time'] = response.xpath("").extract_first()
         item['topTitle'] = response.xpath("").extract_first()
         item['bottomTitle'] = response.xpath("").extract_first()
-        return item"""
+        return item
+
+        
+
+if __name__ == '__main__':
+
+    from scrapy import cmdline
+    command = ['scrapy','crawl','{}','-a','test=True']
+    cmdline.execute(command)"""
 
 
 def get_script_name(sitename,channel_path):
     sitename = sitename.replace('\\','').replace('/','')
     channel_path = channel_path.replace('\\','').replace('/','')
     word = sitename +'_' + channel_path
-    script_name = re.sub('\W','',get_pinyin(word))
+    script_name = re.sub(r'\W','',get_pinyin(word))
     if script_name[0].isdigit() or script_name[0] =='_':
         script_name = 'a_' + script_name
     return script_name
@@ -79,7 +98,7 @@ def gen_one_spider(sitename,channel_path,docchannel,weburl):
         print(sitename,channel_path,filename,'is already exists !!!')
         return
 
-    processed_template = TEMPLATE.format(className,sitename,channel_path,docchannel,name,weburl,'{}','{}')
+    processed_template = TEMPLATE.format(className,sitename,channel_path,docchannel,name,weburl,className,'{}','{}',name)
     with open(filename,'w',encoding='utf-8') as f:
         f.write(processed_template)
 
@@ -161,7 +180,7 @@ def gen_spiders_from_excel():
 
 
 if __name__ == '__main__':
-    # gen_one_spider('39健康网','资讯频道_食品安全','资讯频道_食品安全','http://news.39.net/ysbj/ys/')
-    gen_spiders_from_excel()
+    gen_one_spider('39999健康网','资讯频道_食品安全','资讯频道_食品安全','http://news.39.net/ysbj/ys/test/')
+    # gen_spiders_from_excel()
 
 

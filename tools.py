@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
-# @Last Modified by:   lim
-# @Last Modified time: 2018-08-13 16:07:48
+# @Last Modified by:   xb12369
+# @Last Modified time: 2018-08-14 13:19:45
 
 import os
 import sys
@@ -66,7 +66,7 @@ def clean_all(root_dirs, suffixes=suffixes):
 
 
 
-#clear pyc
+#clear pyc __pycache__
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         root_dirs = [os.path.dirname(os.path.abspath(__file__))]

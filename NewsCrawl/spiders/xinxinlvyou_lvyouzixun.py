@@ -5,7 +5,7 @@ from scrapy.spiders import CrawlSpider, Rule
 
 
 class Xinxinlvyou_lvyouzixunSpider(CrawlSpider):
-    
+
     IR_SITENAME = '欣欣旅游'
     CHANNAL_PATH  ='旅游资讯'
     DOCCHANNEL = '旅游资讯'
@@ -15,6 +15,10 @@ class Xinxinlvyou_lvyouzixunSpider(CrawlSpider):
     rules = (
         Rule(LinkExtractor(restrict_xpaths='//ul[@class="news_list"]/li/a'), callback='parse_item'),
     )
+
+    def __init__(self, test=False, *args, **kwargs):
+        super(Xinxinlvyou_lvyouzixunSpider, self).__init__(*args, **kwargs)
+        self.test = test
 
     def parse_start_url(self,response):
         item =  {}
@@ -35,3 +39,10 @@ class Xinxinlvyou_lvyouzixunSpider(CrawlSpider):
         item['topTitle'] = ''
         item['bottomTitle'] = ''
         return item
+
+
+if __name__ == '__main__':
+
+    from scrapy import cmdline
+    command = ['scrapy','crawl','xinxinlvyou_lvyouzixun','-a','test=True']
+    cmdline.execute(command)

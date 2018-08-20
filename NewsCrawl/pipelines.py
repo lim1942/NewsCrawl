@@ -2,7 +2,7 @@
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
 # @Last Modified by:   xb12369
-# @Last Modified time: 2018-08-14 11:20:38
+# @Last Modified time: 2018-08-20 11:38:52
 
 # Define your item pipelines here
 #
@@ -124,30 +124,30 @@ class NewscrawlPipeline(object):
                     index = '错误' if indexLen is None else '正常'
                     continue
 
-                url = item['url'] + ';'
+                url = item['url']
 
                 if  item.get('title') is None:
-                    title += url
+                    title = url
                 if  item.get('content') is None:
-                    content += url
+                    content = url
                 if  item.get('source') is None:
-                    source += url
+                    source = url
                 if  item.get('author') is None:
-                    author += url
+                    author = url
                 if  item.get('time') is None:
-                    _time += url
+                    _time = url
                 if  item.get('topTitle') is None:
-                    topTitle += url
+                    topTitle = url
                 if  item.get('bottomTitle') is None:
-                    bottomTitle += url
+                    bottomTitle = url
 
-            title = '正常' if not title else '错误：'+title
-            content = '正常' if not content else '错误：'+content
-            source = '正常' if not source else '错误：'+source
-            author = '正常' if not author else '错误：'+author
-            _time = '正常' if not _time else '错误：'+_time
-            topTitle = '正常' if not topTitle else '错误：'+topTitle
-            bottomTitle = '正常' if not bottomTitle else '错误：'+bottomTitle
+            title = '正常' if not title else '标题错误：'+title
+            content = '正常' if not content else '内容错误：'+content
+            source = '正常' if not source else '来源错误：'+source
+            author = '正常' if not author else '作者错误：'+author
+            _time = '正常' if not _time else '时间错误：'+_time
+            topTitle = '正常' if not topTitle else '引题错误：'+topTitle
+            bottomTitle = '正常' if not bottomTitle else '副题错误：'+bottomTitle
 
             if (title=='正常' and content=='正常' and source=='正常' and author=='正常'
                and _time=='正常' and topTitle=='正常' and bottomTitle=='正常'):
@@ -161,8 +161,11 @@ class NewscrawlPipeline(object):
             output_line = '^'.join(total_field) + '\n'
 
         # for total result
-        with open(self.get_filename(),'a',encoding=RESULT_ENCODING) as f:
-            f.write(output_line)
+        if spider.test:
+            print('\n\n\n\nINFO >>>>>>>>>>>>>>>:',output_line)
+        else:
+            with open(self.get_filename(),'a',encoding=RESULT_ENCODING) as f:
+                f.write(output_line)
 
         # for wrong result 
         if EVALUTE != '正常':
@@ -170,13 +173,17 @@ class NewscrawlPipeline(object):
                                 SITE_URL, index, title, content, source,
                                 author, _time, topTitle, bottomTitle]
             wrong_output_line = '^'.join(wrong_total_field) + '\n'
-            f = open(self.get_wrong_filename(),encoding=RESULT_ENCODING)
-            all_line = f.readlines()
-            f.close()
-            if wrong_output_line not in all_line:
-                with open(self.get_wrong_filename(),'a',encoding=RESULT_ENCODING) as f:
-                    f.write(wrong_output_line)
+            if spider.test:
+                print('WRONG >>>>>>>>>>>>>>>>>>:',wrong_output_line,'\n\n\n\n')
+            else:
+                f = open(self.get_wrong_filename(),encoding=RESULT_ENCODING)
+                all_line = f.readlines()
+                f.close()
+                if wrong_output_line not in all_line:
+                    with open(self.get_wrong_filename(),'a',encoding=RESULT_ENCODING) as f:
+                        f.write(wrong_output_line)
 
         # if script run success ,remove its name from uncheck_list
-        self.remove_success_from_uncheck_file(SITE_URL)
+        if not spider.test:
+            self.remove_success_from_uncheck_file(SITE_URL)
 
