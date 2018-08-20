@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
-# @Last Modified by:   lim
-# @Last Modified time: 2018-08-20 12:43:52
+# @Last Modified by:   xb12369
+# @Last Modified time: 2018-08-20 15:31:30
 
 import os
 import re
@@ -38,7 +38,7 @@ class {}Spider(CrawlSpider):
     )
 
     def __init__(self, test=False, *args, **kwargs):
-        super({}, self).__init__(*args, **kwargs)
+        super({}Spider, self).__init__(*args, **kwargs)
         self.test = test
 
     def parse_start_url(self,response):
@@ -180,7 +180,7 @@ def gen_spiders_from_excel():
 
 
 if __name__ == '__main__':
-    gen_one_spider('39999健康网','资讯频道_食品安全','资讯频道_食品安全','http://news.39.net/ysbj/ys/test/')
     # gen_spiders_from_excel()
+    gen_one_spider('39999健康网','资讯频道_食品安全','资讯频道_食品安全','http://news.39.net/ysbj/ys/test/')
 
 

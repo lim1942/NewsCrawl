@@ -2,8 +2,8 @@
 一.依赖
 
 	python 3.6
-	frame:scrapy 1.5
-	系统:windows
+	frame: scrapy 1.5  +  scrpyd
+	系统: windows
 
 
 二.监控原理
