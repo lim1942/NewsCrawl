@@ -2,7 +2,7 @@
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
 # @Last Modified by:   lim
-# @Last Modified time: 2018-08-20 11:57:45
+# @Last Modified time: 2018-08-20 12:43:52
 
 import os
 import re
@@ -32,7 +32,7 @@ class {}Spider(CrawlSpider):
     name = '{}'
     start_urls = ['{}']
     
-    # 1 >> 请配置概览页url提取规则
+    # 1 >> 请配置概览页url提取规则，为了细缆页的爬取而配置的
     rules = (
         Rule(LinkExtractor(restrict_xpaths=""), callback='parse_item'),
     )
@@ -44,7 +44,7 @@ class {}Spider(CrawlSpider):
     def parse_start_url(self,response):
         item =  {}
 
-        # 2 >> 请配置概览页url提取规则(基本与1相同)
+        # 2 >> 请配置概览页url提取规则(基本与1相同)，为了取概览页的内容而配置的
         indexLen = len(response.xpath("").extract())
         item['indexLen'] = indexLen
         return item
