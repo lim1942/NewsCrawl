@@ -2,7 +2,7 @@
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
 # @Last Modified by:   xb12369
-# @Last Modified time: 2018-08-20 17:50:00
+# @Last Modified time: 2018-08-21 09:01:49
 
 # Define your item pipelines here
 #
@@ -47,7 +47,7 @@ class NewscrawlPipeline(object):
         return time.strftime('%Y-%m-%d') + '.txt'
 
 
-    def remove_success_spider_name_from_disable_script_list_file(self,url):
+    def remove_success_spider_name_from_disable_script_list_file(self,SCRIPT_NAME):
         """if this spider run successful and parse fields correct, 
            remove its name from disable_script_list.txt"""
 
@@ -60,7 +60,7 @@ class NewscrawlPipeline(object):
         with open(disable_script_list_file_filename,'w+',encoding=DISABLE_SCRIPT_FILE_ENCODING) as f:
             filter_con = ''
             for line in content:
-                if url not in line:
+                if SCRIPT_NAME not in line:
                     filter_con += line
             f.write(filter_con)
 
@@ -205,5 +205,5 @@ class NewscrawlPipeline(object):
         # As a spider start ,wiil add it`s name to disable_script_list.txt (except test mode)
         # if script run and parse-fields successful ,remove its name from disable_script_list.txt that means this script is correct  (except test mode)
         if (not spider.test) and output_line:
-            self.remove_success_spider_name_from_disable_script_list_file(SITE_URL)
+            self.remove_success_spider_name_from_disable_script_list_file(SCRIPT_NAME)
 

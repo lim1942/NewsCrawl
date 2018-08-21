@@ -2,7 +2,11 @@
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
 # @Last Modified by:   xb12369
+<<<<<<< HEAD
 # @Last Modified time: 2018-08-20 15:31:30
+=======
+# @Last Modified time: 2018-08-20 12:50:47
+>>>>>>> 262d32f987a15b581826a9073cef246ada203047
 
 import os
 import re
