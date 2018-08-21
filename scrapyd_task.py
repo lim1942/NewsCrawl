@@ -2,7 +2,7 @@
 # @Author: lim
 # @Date:   2018-08-13 13:52:04
 # @Last Modified by:   xb12369
-# @Last Modified time: 2018-08-15 16:20:46
+# @Last Modified time: 2018-08-21 09:25:03
 
 import os
 import xlrd
@@ -14,7 +14,7 @@ from tools import excel_ensure
 
 
 UNCHECK_FILE_ENCODING = 'utf-8'
-UNCHECK_PATH = 'disable_script_list.txt'
+DISABLE_SCRIPT_LIST_FILENAME = 'disable_script_list.txt'
 EXCEL_PATH = 'work/start_check_from_excel/'
 
 
@@ -161,7 +161,7 @@ class my_scrapyd:
         return status
 
 
-    def write_spider_to_uncheck_file(self,filename,line):
+    def write_spider_name_to_disable_script_list_file(self,filename,line):
         con = ''
         if os.path.exists(filename):
             f = open(filename,encoding=UNCHECK_FILE_ENCODING)
@@ -210,12 +210,15 @@ class my_scrapyd:
                 continue
             spider = row[0]
             res = self.run_spider(projectname,spider)
+
             sitename = row[1]
             channel_path = row[2]
             docchannel = row[3]
             weburl = row[4]
+            
+            # processing one spider`s infomation line and write it to a file to record
             line = '^'.join([time.strftime('%Y-%m-%d'),spider,sitename,channel_path,docchannel,weburl,'未检查']) + '\n'
-            self.write_spider_to_uncheck_file(UNCHECK_PATH, line)
+            self.write_spider_name_to_disable_script_list_file(DISABLE_SCRIPT_LIST_FILENAME, line)
 
 
 
